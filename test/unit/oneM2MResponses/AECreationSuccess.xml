@@ -2,14 +2,14 @@
 <m2m:ae xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <rty>2</rty>
     <ri>AE00000000000000000048</ri>
-    <rn>ae001</rn>
+    <rn>SmartGondor</rn>
     <pi>Mobius</pi>
     <ct>2015-11-16T15:05:23+01:00</ct>
     <lt>2015-11-16T15:05:23+01:00</lt>
     <lbl></lbl>
     <at></at>
     <aa></aa>
-    <api>ae001</api>
+    <api>SmartGondor</api>
     <aei>S00000000000000000048</aei>
     <poa></poa>
 </m2m:ae>

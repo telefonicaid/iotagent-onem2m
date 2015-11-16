@@ -31,6 +31,19 @@ var oneM2MClient = require('../../lib/services/oneM2MClient'),
 
 describe('OneM2M module', function() {
     describe('When a user creates a new Application Entity', function() {
+        var expectedResult = {
+            rty: '2',
+            ri: 'AE00000000000000000048',
+            rn: 'SmartGondor',
+            pi: 'Mobius',
+            ct: '2015-11-16T15:05:23+01:00',
+            lt: '2015-11-16T15:05:23+01:00',
+            api: 'SmartGondor',
+            aei: 'S00000000000000000048',
+            poa: '',
+            rsc: '2001'
+            };
+
         beforeEach(function(done) {
             nock.cleanAll();
 
@@ -39,7 +52,13 @@ describe('OneM2M module', function() {
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'SmartGondor')
                 .post('/Mobius', utils.readExampleFile('./test/unit/oneM2MRequests/AECreation.xml', true))
-                .reply(200, utils.readExampleFile('./test/unit/oneM2MResponses/AECreationSuccess.xml', true));
+                .reply(
+                    200,
+                    utils.readExampleFile('./test/unit/oneM2MResponses/AECreationSuccess.xml', true),
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '2001'
+                    });
 
             oneM2MClient.init(config, done);
         });
@@ -52,7 +71,13 @@ describe('OneM2M module', function() {
             });
         });
 
-        it('should return all the response fields');
+        it('should return all the response fields', function(done) {
+            oneM2MClient.createAE('SmartGondor', function(error, result) {
+                should.exist(result);
+                result.should.deepEqual(expectedResult);
+                done();
+            });
+        });
     });
     describe('When a user removes an Application Entity', function() {
         it('should send an XML remove request to the OneM2M endpoint');

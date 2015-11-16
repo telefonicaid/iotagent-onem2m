@@ -46,8 +46,10 @@ the mapping for the header values:
 | Header name          | Standard name          |  Operation   | Mapping in FIWARE                                     |
 | -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
 | X-M2M-RI             | App-ID                 | CREATE (Req) | Unique ID of a request. Generated with UUID.          |
-| X-M2M-Origin         | App-ID                 | CREATE (Req) | The string "Origin"                                   |
-| X-M2M-NM   	         | App-ID                 | CREATE (Req) | Same value as the `api` attribute.                    |
+| X-M2M-Origin         | From                   | CREATE (Req) | The string "Origin"                                   |
+| X-M2M-NM   	         | Name                   | CREATE (Req) | Same value as the `api` attribute.                    |
+| X-M2M-RI             | App-ID                 | CREATE (Res) | Unique ID of a request. Generated with UUID.          |
+| X-M2M-RSC            | Response Status Code   | CREATE (Res) | Check for operation result or errors.                 |
 
 ## Development documentation
 ### Project build
