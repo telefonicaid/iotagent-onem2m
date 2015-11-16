@@ -25,7 +25,6 @@
 var oneM2MClient = require('../../lib/services/oneM2MClient'),
     nock = require('nock'),
     should = require('should'),
-    request = require('request'),
     utils = require('../tools/utils'),
     config = require('./testConfig'),
     oneM2MMock;
