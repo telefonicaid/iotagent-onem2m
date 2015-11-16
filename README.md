@@ -2,6 +2,53 @@
 
 IoT Agent for the OneM2M protocol
 
+## Overview
+
+### OneM2M Conventions
+In order to implement the first version of the IoTA, some conventions were applied for the bridge between NGSI entities
+and OneM2M Ones. Those conventions can be split in two categories: general conventions and operation specific conventions.
+
+#### General conventions
+This is a list of the general conventions that were considered for this first verison of the OneM2M IOTA:
+- Each FIWARE service (or Tenant) will be mapped to a OneM2M AE (as a service represents a cloud application in the FIWARE
+ecosystem.
+- Each subservice will be represented in OneM2M as a subservice.
+- Each device will be represented as a Resource Entity.
+
+#### Protocol specific conventions
+##### AE-related operations
+The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
+mapped from information in FIWARE systems (or default values). This mapping corresponds to the first version of the
+OneM2M IOTA and may change in the future.
+
+| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| api       	         | App-ID                 | CREATE (Req) | Value of header `fiware-service`.                     |
+| aei       	         | AE-ID                  | CREATE (Req) | Value of header `fiware-service`.                     |
+| rr        	         | requestReachability    | CREATE (Req) | Always true.                                          |
+| rty        	         | resourceType           | CREATE (Res) | Filled in by OneM2M. Ignored in IOTA.                 |
+| ri        	         | resourceID             | CREATE (Res) | Filled in by OneM2M. Stored as internalId in IOTA.    |
+| rn        	         | resourceName           | CREATE (Res) | Same as the `api`. Ignored in IOTA.                   |
+| pi        	         | parentID               | CREATE (Res) | Ignored in IOTA.                                      |
+| ct        	         | creationTime           | CREATE (Res) | Ignored in IOTA.                                      |
+| lt        	         | lastModifiedTime       | CREATE (Res) | Ignored in IOTA.                                      |
+| lbl        	         | labels                 | CREATE (Res) | Ignored in IOTA.                                      |
+| acpi       	         | accessControlPolicyIDs | CREATE (Res) | Ignored in IOTA.                                      |
+| at        	         | announcedAttribute     | CREATE (Res) | Ignored in IOTA.                                      |
+| aa        	         | announcedAttribute     | CREATE (Res) | Ignored in IOTA.                                      |
+| api       	         | App-ID                 | CREATE (Res) | Same values given in the request.                     |
+| aei       	         | AE-ID                  | CREATE (Res) | Same values given in the request.                     |
+| poa       	         | pointOfAccess          | CREATE (Res) | Address of the OneM2M IoTA.                           |
+
+Along with the XML content of the request, some information must be passed along in headers. The following table shows
+the mapping for the header values:
+
+| Header name          | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| X-M2M-RI             | App-ID                 | CREATE (Req) | Unique ID of a request. Generated with UUID.          |
+| X-M2M-Origin         | App-ID                 | CREATE (Req) | The string "Origin"                                   |
+| X-M2M-NM   	         | App-ID                 | CREATE (Req) | Same value as the `api` attribute.                    |
+
 ## Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
