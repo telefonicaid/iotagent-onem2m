@@ -1,3 +1,4 @@
 {
-  "AECreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}"
+  "AECreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}",
+  "AERemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}"
 }

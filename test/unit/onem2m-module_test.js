@@ -80,7 +80,30 @@ describe('OneM2M module', function() {
         });
     });
     describe('When a user removes an Application Entity', function() {
-        it('should send an XML remove request to the OneM2M endpoint');
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .delete('/Mobius/AE-SmartGondor')
+                .reply(
+                200,
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2002'
+                });
+
+            oneM2MClient.init(config, done);
+        });
+
+        it('should send an XML remove request to the OneM2M endpoint', function(done) {
+            oneM2MClient.removeAE('SmartGondor', function(error, result) {
+                should.not.exist(error);
+                oneM2MMock.done();
+                done();
+            });
+        });
     });
     describe('When a user creates a container', function() {
         it('should send an create content instance with type container to the OneM2M endpoint');
