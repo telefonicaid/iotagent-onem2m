@@ -85,8 +85,7 @@ describe('OneM2M module', function() {
 
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
-                .matchHeader('X-M2M-Origin', 'Origin')
-                .delete('/Mobius/AE-SmartGondor')
+                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/AE-SmartGondor')
                 .reply(
                 200,
                 {
