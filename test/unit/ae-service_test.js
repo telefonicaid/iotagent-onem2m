@@ -23,6 +23,7 @@
 'use strict';
 
 var aeMgmt = require('../../lib/services/oneM2M/aeService'),
+    configService = require('../../lib/services/configService'),
     nock = require('nock'),
     should = require('should'),
     utils = require('../tools/utils'),
@@ -60,7 +61,7 @@ describe('OneM2M module', function() {
                         'X-M2M-RSC': '2001'
                     });
 
-            aeMgmt.init(config, done);
+            configService.init(config, done);
         });
 
         it('should send an XML creation request to the OneM2M endpoint', function(done) {
@@ -93,7 +94,7 @@ describe('OneM2M module', function() {
                     'X-M2M-RSC': '2002'
                 });
 
-            aeMgmt.init(config, done);
+            configService.init(config, done);
         });
 
         it('should send an XML remove request to the OneM2M endpoint', function(done) {
@@ -103,20 +104,5 @@ describe('OneM2M module', function() {
                 done();
             });
         });
-    });
-    describe('When a user creates a container', function() {
-        it('should send an create content instance with type container to the OneM2M endpoint');
-    });
-    describe('When a user gets a container', function() {
-        it('should return all the information from the container');
-    });
-    describe('When a user removes a container', function() {
-        it('should send an remove content instance for the selected container to the OneM2M endpoint');
-    });
-    describe('When a user creates a resource', function() {
-        it('should send an create content instance with type resource to the OneM2M endpoint');
-    });
-    describe('When a user removes a resource', function() {
-        it('should send an remove content instance for the selected resource to the OneM2M endpoint');
     });
 });

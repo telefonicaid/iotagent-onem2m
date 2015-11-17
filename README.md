@@ -16,10 +16,11 @@ ecosystem.
 - Each device will be represented as a Resource Entity.
 
 #### Protocol specific conventions
-##### AE-related operations
 The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
 mapped from information in FIWARE systems (or default values). This mapping corresponds to the first version of the
 OneM2M IOTA and may change in the future.
+
+##### AE-related operations
 
 | Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
 | -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
@@ -45,11 +46,44 @@ the mapping for the header values:
 
 | Header name          | Standard name          |  Operation   | Mapping in FIWARE                                     |
 | -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
-| X-M2M-RI             | App-ID                 | CREATE (Req) | Unique ID of a request. Generated with UUID.          |
-| X-M2M-Origin         | From                   | CREATE (Req) | The string "Origin"                                   |
+| X-M2M-RI             | App-ID                 | ALL (Req)    | Unique ID of a request. Generated with UUID.          |
+| X-M2M-Origin         | From                   | ALL (Req)    | The string "Origin"                                   |
 | X-M2M-NM   	         | Name                   | CREATE (Req) | Same value as the `api` attribute.                    |
-| X-M2M-RI             | App-ID                 | CREATE (Res) | Unique ID of a request. Generated with UUID.          |
-| X-M2M-RSC            | Response Status Code   | CREATE (Res) | Check for operation result or errors.                 |
+| X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
+| X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
+
+##### Container-related operations
+
+| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| containerType        | containerType          | CREATE (Req) | Unclear. Currently the fixed string "heartbeat"       |
+| heartbeatPeriod      | heartbeatPeriod        | CREATE (Req) | Unclear. Currently the fixed value 300                |
+| rty        	         | resourceType           | CREATE (Res) | Filled in by OneM2M. Ignored in IOTA.                 |
+| ri        	         | resourceID             | CREATE (Res) | Filled in by OneM2M. Stored as internalId in IOTA.    |
+| rn        	         | resourceName           | CREATE (Res) | Same as the `Name` header. Ignored in IOTA.           |
+| pi        	         | parentID               | CREATE (Res) | Ignored in IOTA.                                      |
+| ct        	         | creationTime           | CREATE (Res) | Ignored in IOTA.                                      |
+| lt        	         | lastModifiedTime       | CREATE (Res) | Ignored in IOTA.                                      |
+| lbl        	         | labels                 | CREATE (Res) | Ignored in IOTA.                                      |
+| at        	         | announcedAttribute     | CREATE (Res) | Ignored in IOTA.                                      |
+| aa        	         | announcedAttribute     | CREATE (Res) | Ignored in IOTA.                                      |
+| st        	         | stateTag               | CREATE (Res) | Ignored in IOTA.                                      |
+| cr        	         | creator                | CREATE (Res) | Same as parent.                                       |
+| cni        	         | currentNrOfInstances   | CREATE (Res) | Number of childs in the container.                    |
+| cbs        	         | currentByteSize        | CREATE (Res) | Total size of the container in bytes.                 |
+| containerType        | containerType          | CREATE (Res) | Unclear. Currently the fixed string "heartbeat"       |
+| heartbeatPeriod      | heartbeatPeriod        | CREATE (Res) | Unclear. Currently the fixed value 300                |
+
+Along with the XML content of the request, some information must be passed along in headers. The following table shows
+the mapping for the header values:
+
+| Header name          | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| X-M2M-RI             | App-ID                 | ALL (Req)    | Unique ID of a request. Generated with UUID.          |
+| X-M2M-Origin         | From                   | ALL (Req)    | The string "Origin"                                   |
+| X-M2M-NM   	         | Name                   | CREATE (Req) | Name of the container to create.                      |
+| X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
+| X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
 
 ## Development documentation
 ### Project build
