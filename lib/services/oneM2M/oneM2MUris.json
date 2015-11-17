@@ -2,5 +2,5 @@
   "AECreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}",
   "AERemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
   "ContainerCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
-  "ContainerRemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}"
+  "GetContainerTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}"
 }
