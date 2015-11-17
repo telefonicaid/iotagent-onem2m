@@ -30,7 +30,7 @@ var resourceService = require('../../lib/services/oneM2M/resourceService'),
     config = require('./testConfig'),
     oneM2MMock;
 
-describe('OneM2M module', function() {
+describe('OneM2M module: Content instances', function() {
     describe('When a user creates a resource', function() {
         var expectedResult = {
             rty: '4',
@@ -67,7 +67,7 @@ describe('OneM2M module', function() {
             configService.init(config, done);
         });
 
-        it('should send an create content instance with type resource to the OneM2M endpoint', function(done) {
+        it('should send a create content instance with type resource to the OneM2M endpoint', function(done) {
             resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', function(error, result) {
                 should.not.exist(error);
                 oneM2MMock.done();

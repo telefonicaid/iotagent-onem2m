@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<m2m:sub
+        xmlns:m2m="http://www.onem2m.org/xml/protocols"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <enc>
+        <rss>1</rss>
+    </enc>
+    <nu>{{{uri}}}</nu>
+    <pn>1</pn>
+    <nct>2</nct>
+</m2m:sub>

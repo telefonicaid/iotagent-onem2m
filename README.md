@@ -85,6 +85,15 @@ OneM2M IOTA and may change in the future.
 | cr        	         | creator                | CREATE (Res) | Same as parent.                                       |
 | cs        	         | contentSize            | CREATE (Res) | Same as parent.                                       |
 
+##### Subscription-related operations
+| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| rss        	         | resourceStatus         | CREATE (Req) | Unclear. Currently, the fixed string 1.               |
+| nu        	         | notificationURI        | CREATE (Req) | Public URI of the IoT Agent.                          |
+| pn        	         | pendingNotification    | CREATE (Req) | Unclear. Currently, the fixed string 1.               |
+| nct        	         | notificationContentType | CREATE (Req) | Unclear. Currently, the fixed string 2.              |
+
+
 #### Operation headers
 
 Along with the XML content of the request, some information must be passed along in headers. The following table shows

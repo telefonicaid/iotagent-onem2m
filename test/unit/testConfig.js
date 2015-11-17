@@ -27,7 +27,12 @@ var config = {};
 config.oneM2M = {
     host: 'mockedOneM2M.com',
     port: 4567,
-    cseBase: '/Mobius'
+    cseBase: '/Mobius',
+    notifications: {
+        publicHost: 'localhost',
+        port: '7654',
+        path: '/notifications'
+    }
 };
 
 config.iota = {
