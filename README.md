@@ -9,11 +9,18 @@ In order to implement the first version of the IoTA, some conventions were appli
 and OneM2M Ones. Those conventions can be split in two categories: general conventions and operation specific conventions.
 
 #### General conventions
-This is a list of the general conventions that were considered for this first verison of the OneM2M IOTA:
-- Each FIWARE service (or Tenant) will be mapped to a OneM2M AE (as a service represents a cloud application in the FIWARE
-ecosystem.
-- Each subservice will be represented in OneM2M as a subservice.
-- Each device will be represented as a Resource Entity.
+This is a list of the general conventions that were considered for this first version of the OneM2M IOTA:
+
+- Each FIWARE service (or Tenant), along with its subservice (or service path) will be mapped to a single OneM2M AE (as 
+  a service represents a cloud application in the FIWARE ecosystem).
+  
+- Each device will be represented as a Container.
+
+- Whenever an update context arrives to the IoT Agent with a command value, a new content instance will be created under
+  the device container.
+  
+- When a new device is provisioned, a subscription to the device container will be created. Notifications to the IOTA 
+  will be mapped to active attributes.
 
 #### Protocol specific conventions
 The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
