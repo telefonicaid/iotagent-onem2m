@@ -41,17 +41,6 @@ OneM2M IOTA and may change in the future.
 | aei       	         | AE-ID                  | CREATE (Res) | Same values given in the request.                     |
 | poa       	         | pointOfAccess          | CREATE (Res) | Address of the OneM2M IoTA.                           |
 
-Along with the XML content of the request, some information must be passed along in headers. The following table shows
-the mapping for the header values:
-
-| Header name          | Standard name          |  Operation   | Mapping in FIWARE                                     |
-| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
-| X-M2M-RI             | App-ID                 | ALL (Req)    | Unique ID of a request. Generated with UUID.          |
-| X-M2M-Origin         | From                   | ALL (Req)    | The string "Origin"                                   |
-| X-M2M-NM   	         | Name                   | CREATE (Req) | Same value as the `api` attribute.                    |
-| X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
-| X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
-
 ##### Container-related operations
 
 | Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
@@ -74,6 +63,23 @@ the mapping for the header values:
 | containerType        | containerType          | CREATE (Res) | Unclear. Currently the fixed string "heartbeat"       |
 | heartbeatPeriod      | heartbeatPeriod        | CREATE (Res) | Unclear. Currently the fixed value 300                |
 
+##### Resource-related operations
+| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| cnf        	         | contentInfo            | CREATE (Both)| Type of resource stored in content.                   |
+| con        	         | content                | CREATE (Both)| Data content for the content instance resource.       |
+| rty        	         | resourceType           | CREATE (Res) | Filled in by OneM2M. Ignored in IOTA.                 |
+| ri        	         | resourceID             | CREATE (Res) | Filled in by OneM2M. Stored as internalId in IOTA.    |
+| rn        	         | resourceName           | CREATE (Res) | Same as the `Name` header. Ignored in IOTA.           |
+| pi        	         | parentID               | CREATE (Res) | Ignored in IOTA.                                      |
+| ct        	         | creationTime           | CREATE (Res) | Ignored in IOTA.                                      |
+| lt        	         | lastModifiedTime       | CREATE (Res) | Ignored in IOTA.                                      |
+| st        	         | stateTag               | CREATE (Res) | Ignored in IOTA.                                      |
+| cr        	         | creator                | CREATE (Res) | Same as parent.                                       |
+| cs        	         | contentSize            | CREATE (Res) | Same as parent.                                       |
+
+#### Operation headers
+
 Along with the XML content of the request, some information must be passed along in headers. The following table shows
 the mapping for the header values:
 
@@ -84,6 +90,7 @@ the mapping for the header values:
 | X-M2M-NM   	         | Name                   | CREATE (Req) | Name of the container to create.                      |
 | X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
 | X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
+
 
 ## Development documentation
 ### Project build
