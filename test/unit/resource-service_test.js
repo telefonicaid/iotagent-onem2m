@@ -22,9 +22,66 @@
  */
 'use strict';
 
+var resourceService = require('../../lib/services/oneM2M/resourceService'),
+    configService = require('../../lib/services/configService'),
+    nock = require('nock'),
+    should = require('should'),
+    utils = require('../tools/utils'),
+    config = require('./testConfig'),
+    oneM2MMock;
+
 describe('OneM2M module', function() {
     describe('When a user creates a resource', function() {
-        it('should send an create content instance with type resource to the OneM2M endpoint');
+        var expectedResult = {
+            rty: '4',
+            ri: 'CI00000000000000000042',
+            rn: 'testDevice',
+            pi: 'CT00000000000000000048',
+            ct: '2015-11-17T12:03:16+01:00',
+            lt: '2015-11-17T12:03:16+01:00',
+            st: '1',
+            cr: 'AE00000000000000000052',
+            cnf: 'text',
+            cs: '3',
+            con: '101',
+            rsc: '2001'
+        };
+
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'testDevice')
+                .post('/Mobius/AE-SmartGondor/container-gardens',
+                utils.readExampleFile('./test/unit/oneM2MRequests/resourceCreation.xml', true))
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/resourceCreationSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2001'
+                });
+
+            configService.init(config, done);
+        });
+
+        it('should send an create content instance with type resource to the OneM2M endpoint', function(done) {
+            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', function(error, result) {
+                should.not.exist(error);
+                oneM2MMock.done();
+                done();
+            });
+        });
+
+        it('should return all the response fields', function(done) {
+            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', function(error, result) {
+                should.exist(result);
+                result.should.deepEqual(expectedResult);
+                done();
+            });
+        });
     });
     describe('When a user gets a resource', function() {
         it('should return all the service information');
