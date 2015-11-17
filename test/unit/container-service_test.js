@@ -87,6 +87,28 @@ describe.only('OneM2M Module: Containers', function() {
         it('should return all the information from the container');
     });
     describe('When a user removes a container', function() {
-        it('should send an remove content instance for the selected container to the OneM2M endpoint');
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/AE-SmartGondor/container-gardens')
+                .reply(
+                200,
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2002'
+                });
+
+            configService.init(config, done);
+        });
+
+        it('should send an remove content instance for the selected container to the OneM2M endpoint', function(done) {
+            contService.remove('SmartGondor', 'gardens', function(error, result) {
+                should.not.exist(error);
+                oneM2MMock.done();
+                done();
+            });
+        });
     });
 });
