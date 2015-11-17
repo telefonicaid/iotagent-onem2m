@@ -33,15 +33,18 @@ var contService = require('../../lib/services/oneM2M/containerService'),
 describe.only('OneM2M Module: Containers', function() {
     describe('When a user creates a container', function() {
         var expectedResult = {
-            rty: '2',
-            ri: 'AE00000000000000000048',
-            rn: 'SmartGondor',
-            pi: 'Mobius',
-            ct: '2015-11-16T15:05:23+01:00',
-            lt: '2015-11-16T15:05:23+01:00',
-            api: 'SmartGondor',
-            aei: 'S00000000000000000048',
-            poa: '',
+            rty: '3',
+            ri: 'CT00000000000000000043',
+            rn: 'gardens',
+            pi: 'AE00000000000000000051',
+            ct: '2015-11-17T09:53:36+01:00',
+            lt: '2015-11-17T09:53:36+01:00',
+            st: '0',
+            cr: 'AE00000000000000000051',
+            cni: '0',
+            cbs: '0',
+            containerType: 'heartbeat',
+            heartbeatPeriod: '300',
             rsc: '2001'
         };
 
@@ -69,6 +72,13 @@ describe.only('OneM2M Module: Containers', function() {
             contService.create('SmartGondor', 'gardens', function(error, result) {
                 should.not.exist(error);
                 oneM2MMock.done();
+                done();
+            });
+        });
+        it('should return all the response fields', function(done) {
+            contService.create('SmartGondor', 'gardens', function(error, result) {
+                should.exist(result);
+                result.should.deepEqual(expectedResult);
                 done();
             });
         });
