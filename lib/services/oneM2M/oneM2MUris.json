@@ -3,5 +3,6 @@
   "AERemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
   "ContainerCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
   "GetContainerTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
-  "ResourceCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}"
+  "ResourceCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
+  "GetResourceTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/contentInstance-{{ResName}}"
 }
