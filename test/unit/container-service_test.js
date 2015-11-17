@@ -30,7 +30,7 @@ var contService = require('../../lib/services/oneM2M/containerService'),
     config = require('./testConfig'),
     oneM2MMock;
 
-describe.only('OneM2M Module: Containers', function() {
+describe('OneM2M Module: Containers', function() {
     describe('When a user creates a container', function() {
         var expectedResult = {
             rty: '3',

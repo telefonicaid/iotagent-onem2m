@@ -22,13 +22,6 @@
  */
 'use strict';
 
-var aeMgmt = require('../../lib/services/oneM2M/aeService'),
-    nock = require('nock'),
-    should = require('should'),
-    utils = require('../tools/utils'),
-    config = require('./testConfig'),
-    oneM2MMock;
-
 describe('OneM2M module', function() {
     describe('When a user creates a resource', function() {
         it('should send an create content instance with type resource to the OneM2M endpoint');
