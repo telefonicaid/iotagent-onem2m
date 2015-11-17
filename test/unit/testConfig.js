@@ -20,37 +20,34 @@
  * For those usages not covered by the GNU Affero General Public License
  * please contact with::[contacto@tid.es]
  */
-
 'use strict';
 
-var iotAgentLib = require('iotagent-node-lib'),
-    logger = require('logops'),
-    context = {
-        op: 'IoTAgentOneM2M.Agent'
+var config = {};
+
+config.oneM2M = {
+    host: 'mockedOneM2M.com',
+    port: 4567,
+    cseBase: '/Mobius'
+};
+
+config.iota = {
+    logLevel: 'FATAL',
+    contextBroker: {
+        host: '10.11.128.16',
+        port: '1026'
     },
-    config;
+    server: {
+        port: 4041
+    },
+    deviceRegistry: {
+        type: 'memory'
+    },
+    types: {},
+    service: 'howtoService',
+    subservice: '/howto',
+    providerUrl: 'http://localhost:4041',
+    deviceRegistrationDuration: 'P1M',
+    defaultType: 'Thing'
+};
 
-/**
- * Starts the IOTA with the given configuration.
- *
- * @param {Object} newConfig        New configuration object.
- */
-
-function start(newConfig, callback) {
-    logger.info(context, 'Starting OneM2M IoT Agent');
-    config = newConfig;
-
-    iotAgentLib.activate(config.iota, callback);
-}
-
-/**
- * Stops the IoT Agent.
- */
-function stop(callback) {
-    logger.info(context, 'Stopping OneM2M IoT Agent');
-
-    iotAgentLib.deactivate(callback);
-}
-
-exports.start = start;
-exports.stop = stop;
+module.exports = config;

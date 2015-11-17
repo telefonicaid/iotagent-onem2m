@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<m2m:cnt xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<rty>3</rty>
+<ri>CT00000000000000000043</ri>
+<rn>gardens</rn>
+<pi>AE00000000000000000051</pi>
+<ct>2015-11-17T09:53:36+01:00</ct>
+<lt>2015-11-17T09:53:36+01:00</lt>
+<lbl></lbl>
+<at></at>
+<aa></aa>
+<st>0</st>
+<cr>AE00000000000000000051</cr>
+<cni>0</cni>
+<cbs>0</cbs>
+<containerType>heartbeat</containerType>
+<heartbeatPeriod>300</heartbeatPeriod>
+</m2m:cnt>
