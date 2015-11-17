@@ -144,7 +144,7 @@ describe('OneM2M Module: Containers', function() {
             configService.init(config, done);
         });
 
-        it('should send an remove content instance for the selected container to the OneM2M endpoint', function(done) {
+        it('should send a remove content instance for the selected container to the OneM2M endpoint', function(done) {
             contService.remove('SmartGondor', 'gardens', function(error, result) {
                 should.not.exist(error);
                 oneM2MMock.done();
