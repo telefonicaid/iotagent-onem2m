@@ -22,7 +22,7 @@
  */
 'use strict';
 
-var oneM2MClient = require('../../lib/services/oneM2MClient'),
+var aeMgmt = require('../../lib/services/oneM2M/aeService'),
     nock = require('nock'),
     should = require('should'),
     utils = require('../tools/utils'),
@@ -60,11 +60,11 @@ describe('OneM2M module', function() {
                         'X-M2M-RSC': '2001'
                     });
 
-            oneM2MClient.init(config, done);
+            aeMgmt.init(config, done);
         });
 
         it('should send an XML creation request to the OneM2M endpoint', function(done) {
-            oneM2MClient.createAE('SmartGondor', function(error, result) {
+            aeMgmt.createAE('SmartGondor', function(error, result) {
                 should.not.exist(error);
                 oneM2MMock.done();
                 done();
@@ -72,7 +72,7 @@ describe('OneM2M module', function() {
         });
 
         it('should return all the response fields', function(done) {
-            oneM2MClient.createAE('SmartGondor', function(error, result) {
+            aeMgmt.createAE('SmartGondor', function(error, result) {
                 should.exist(result);
                 result.should.deepEqual(expectedResult);
                 done();
@@ -93,11 +93,11 @@ describe('OneM2M module', function() {
                     'X-M2M-RSC': '2002'
                 });
 
-            oneM2MClient.init(config, done);
+            aeMgmt.init(config, done);
         });
 
         it('should send an XML remove request to the OneM2M endpoint', function(done) {
-            oneM2MClient.removeAE('SmartGondor', function(error, result) {
+            aeMgmt.removeAE('SmartGondor', function(error, result) {
                 should.not.exist(error);
                 oneM2MMock.done();
                 done();
@@ -106,6 +106,9 @@ describe('OneM2M module', function() {
     });
     describe('When a user creates a container', function() {
         it('should send an create content instance with type container to the OneM2M endpoint');
+    });
+    describe('When a user gets a container', function() {
+        it('should return all the information from the container');
     });
     describe('When a user removes a container', function() {
         it('should send an remove content instance for the selected container to the OneM2M endpoint');
