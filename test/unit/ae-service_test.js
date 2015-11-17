@@ -30,7 +30,7 @@ var aeMgmt = require('../../lib/services/oneM2M/aeService'),
     config = require('./testConfig'),
     oneM2MMock;
 
-describe('OneM2M module', function() {
+describe('OneM2M module: AEs', function() {
     describe('When a user creates a new Application Entity', function() {
         var expectedResult = {
             rty: '2',

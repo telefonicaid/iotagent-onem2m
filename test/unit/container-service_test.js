@@ -22,14 +22,15 @@
  */
 'use strict';
 
-var aeMgmt = require('../../lib/services/oneM2M/containerService'),
+var contService = require('../../lib/services/oneM2M/containerService'),
+    configService = require('../../lib/services/configService'),
     nock = require('nock'),
     should = require('should'),
     utils = require('../tools/utils'),
     config = require('./testConfig'),
     oneM2MMock;
 
-describe('OneM2M module', function() {
+describe.only('OneM2M Module: Containers', function() {
     describe('When a user creates a container', function() {
         var expectedResult = {
             rty: '2',
@@ -51,7 +52,7 @@ describe('OneM2M module', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'gardens')
-                .post('/Mobius/AE-ae001',
+                .post('/Mobius/AE-SmartGondor',
                     utils.readExampleFile('./test/unit/oneM2MRequests/ContainerCreation.xml', true))
                 .reply(
                     200,
@@ -61,10 +62,16 @@ describe('OneM2M module', function() {
                         'X-M2M-RSC': '2001'
                     });
 
-            aeMgmt.init(config, done);
+            configService.init(config, done);
         });
 
-        it('should send an create content instance with type container to the OneM2M endpoint');
+        it('should send an create content instance with type container to the OneM2M endpoint', function(done) {
+            contService.create('SmartGondor', 'gardens', function(error, result) {
+                should.not.exist(error);
+                oneM2MMock.done();
+                done();
+            });
+        });
     });
     describe('When a user gets a container', function() {
         it('should return all the information from the container');
