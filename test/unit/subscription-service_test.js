@@ -83,10 +83,52 @@ describe('OneM2M module: Subscriptions', function() {
         });
     });
     describe('When a user retrieves a subscription', function() {
-        it('should send a get subscription request to the OneM2M endpoint');
+        var expectedResult = {
+            rty: '23',
+            ri: 'SS00000000000000000017',
+            rn: 'subscription_1',
+            pi: 'CT00000000000000000048',
+            ct: '2015-11-17T16:22:26+01:00',
+            lt: '2015-11-17T16:22:26+01:00',
+            rss: '1',
+            nu: 'http://localhost:7654/notification',
+            pn: '1',
+            nct: '2',
+            rsc: '2000'
+        };
+
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .get('/Mobius/AE-SmartGondor/container-gardens/subscription-subscription_1')
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/subscriptionGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
+
+            configService.init(config, done);
+        });
+
+        it('should send a get subscription request to the OneM2M endpoint', function(done) {
+            subscriptionService.get('SmartGondor', 'gardens', 'subscription_1', function(error, result) {
+                should.not.exist(error);
+                should.exist(result);
+                result.should.deepEqual(expectedResult);
+                done();
+            });
+        });
     });
     describe('When a user removes a subscription', function() {
         it('should send a remove subscription request to the OneM2M endpoint');
+    });
+    describe('When a notification arrives to the notification endpoint', function() {
+        it('should execute the handler with the information of the notification');
     });
 });
 

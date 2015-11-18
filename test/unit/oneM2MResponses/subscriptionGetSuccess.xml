@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<m2m:sub xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rty>23</rty>
+    <ri>SS00000000000000000017</ri>
+    <rn>subscription_1</rn>
+    <pi>CT00000000000000000048</pi>
+    <ct>2015-11-17T16:22:26+01:00</ct>
+    <lt>2015-11-17T16:22:26+01:00</lt>
+    <lbl></lbl>
+    <enc>
+        <rss>1</rss>
+    </enc>
+    <nu>http://localhost:7654/notification</nu>
+    <pn>1</pn>
+    <nct>2</nct>
+</m2m:sub>
