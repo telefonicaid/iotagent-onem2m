@@ -28,6 +28,7 @@ var config = require('../lib/services/configService'),
     aeService = require('../lib/services/oneM2M/aeService'),
     containerService = require('../lib/services/oneM2M/containerService'),
     resourceService = require('../lib/services/oneM2M/resourceService'),
+    subscriptionService = require('../lib/services/oneM2M/subscriptionService'),
     clUtils = require('command-node');
 
 function exitAgent(command) {
@@ -80,6 +81,18 @@ function contentCreateText(command) {
 
 function contentRemove(command) {
     resourceService.remove(command[0], command[1], command[2], createNamedHandler('Content', 'remove'));
+}
+
+function subscriptionGet(command) {
+    subscriptionService.get(command[0], command[1], command[2], createNamedHandler('Subscription', 'get'));
+}
+
+function subscriptionCreate(command) {
+    subscriptionService.create(command[0], command[1], command[2], createNamedHandler('Subscription', 'create'));
+}
+
+function subscriptionRemove(command) {
+    subscriptionService.remove(command[0], command[1], command[2], createNamedHandler('Subscription', 'remove'));
 }
 
 function getConfig(command) {
@@ -140,6 +153,22 @@ var commands = {
         description: '\tRemove the selected content instance from the container and AE',
         handler: contentRemove
     },
+    'subscriptionGet': {
+        parameters: ['ae', 'container', 'name'],
+        description: '\tGet all the information about the subscription in the given container and AE',
+        handler: subscriptionGet
+    },
+    'subscriptionCreate': {
+        parameters: ['ae', 'container', 'name'],
+        description: '\tCreate a new subscription under the selected container and AE, with the string passed\n' +
+        '\tin the argument as content',
+        handler: subscriptionCreate
+    },
+    'subscriptionRemove': {
+        parameters: ['ae', 'container', 'name'],
+        description: '\tRemove the selected subscription from the container and AE',
+        handler: subscriptionRemove
+    },
     'getConfig': {
         parameters: [],
         description: '\tShow the current OneM2M config',
@@ -157,6 +186,16 @@ var commands = {
     }
 };
 
+function notificationHandler(result, callback) {
+    console.log('Notification received:\n\n%s\n\n', result);
+    clUtils.prompt();
+
+    callback(null, '');
+}
+
 config.init(require('../config'), function() {
-    clUtils.initialize(commands, 'IoT Agent tester> ');
+    subscriptionService.setNotificationHandler(notificationHandler);
+    subscriptionService.start(function() {
+        clUtils.initialize(commands, 'OneM2M client> ');
+    });
 });
