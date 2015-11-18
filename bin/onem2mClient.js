@@ -187,7 +187,7 @@ var commands = {
 };
 
 function notificationHandler(result, callback) {
-    console.log('Notification received:\n\n%s\n\n', result);
+    console.log('Notification received:\n\n%s\n\n', JSON.stringify(result, null, 4));
     clUtils.prompt();
 
     callback(null, '');
