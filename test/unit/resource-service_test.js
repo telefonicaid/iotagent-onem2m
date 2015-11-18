@@ -54,6 +54,8 @@ describe('OneM2M module: Content instances', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'testDevice')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
+                .matchHeader('Accept', 'application/xml')
                 .post('/Mobius/AE-SmartGondor/container-gardens',
                 utils.readExampleFile('./test/unit/oneM2MRequests/resourceCreation.xml', true))
                 .reply(
@@ -105,6 +107,7 @@ describe('OneM2M module: Content instances', function() {
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('Accept', 'application/xml')
                 .get('/Mobius/AE-SmartGondor/container-gardens/contentInstance-testDevice')
                 .reply(
                 200,
@@ -132,6 +135,7 @@ describe('OneM2M module: Content instances', function() {
 
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('Accept', 'application/xml')
                 .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/AE-SmartGondor/container-gardens' +
                     '/contentInstance-testDevice')
                 .reply(
