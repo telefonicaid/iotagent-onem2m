@@ -33,6 +33,10 @@ var subscriptionService = require('../../lib/services/oneM2M/subscriptionService
     oneM2MMock;
 
 describe('OneM2M module: Subscriptions', function() {
+    beforeEach(function(done) {
+        configService.init(config, done);
+    });
+
     describe('When a user creates a subscription', function() {
         var expectedResult = {
             rty: '23',
@@ -69,7 +73,7 @@ describe('OneM2M module: Subscriptions', function() {
                         'X-M2M-RSC': '2001'
                     });
 
-            configService.init(config, done);
+            done();
         });
 
         it('should send a create subscription request to the OneM2M endpoint', function(done) {
@@ -159,10 +163,24 @@ describe('OneM2M module: Subscriptions', function() {
         });
     });
     describe('When a notification arrives to the notification endpoint', function() {
+        var expectedResult = {
+            rty: '4',
+            ri: 'CI00000000000000000047',
+            rn: 'contentInstance1',
+            pi: 'CT00000000000000000055',
+            ct: '2015-11-18T16:38:41+01:00',
+            lt: '2015-11-18T16:38:41+01:00',
+            st: '4',
+            cr: 'AE00000000000000000060',
+            cnf: 'text',
+            cs: '3',
+            con: '101'
+        };
+
         var notificationRequest = {
                 uri: 'http://localhost:7654/notification',
                 method: 'POST',
-                body: 'testBody'
+                body: utils.readExampleFile('./test/unit/oneM2MResponses/oneM2MNotification.xml', true)
             };
 
         beforeEach(function(done) {
@@ -191,7 +209,7 @@ describe('OneM2M module: Subscriptions', function() {
             var notificationRequest = {
                     uri: 'http://localhost:7654/notification',
                     method: 'POST',
-                    body: 'testBody'
+                    body: utils.readExampleFile('./test/unit/oneM2MResponses/oneM2MNotification.xml', true)
                 },
                 capturedResult;
 
@@ -204,7 +222,7 @@ describe('OneM2M module: Subscriptions', function() {
 
             request(notificationRequest, function(error, result, body){
                 should.exist(capturedResult);
-                capturedResult.should.equal(notificationRequest.body);
+                capturedResult.should.deepEqual(expectedResult);
                 done();
             });
         });

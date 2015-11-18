@@ -88,7 +88,8 @@ OneM2M IOTA and may change in the future.
 ##### Subscription-related operations
 | Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
 | -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
-| rss        	         | resourceStatus         | CREATE (Req) | Unclear. Currently, the fixed string 1.               |
+| enc        	         | eventNotificationCriteria | CREATE (Req) | Holds the notification criteria (rss)             |
+| rss        	         | resourceStatus         | CREATE (Req) | Indicates the condition is child created (1).        |
 | nu        	         | notificationURI        | CREATE (Req) | Public URI of the IoT Agent.                          |
 | pn        	         | pendingNotification    | CREATE (Req) | Unclear. Currently, the fixed string 1.               |
 | nct        	         | notificationContentType | CREATE (Req) | Unclear. Currently, the fixed string 2.              |
