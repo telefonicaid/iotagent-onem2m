@@ -178,7 +178,7 @@ describe('OneM2M module: Subscriptions', function() {
         };
 
         var notificationRequest = {
-                uri: 'http://localhost:7654/notification',
+                uri: 'http://localhost:7654/notifications',
                 method: 'POST',
                 body: utils.readExampleFile('./test/unit/oneM2MResponses/oneM2MNotification.xml', true)
             };
@@ -192,13 +192,13 @@ describe('OneM2M module: Subscriptions', function() {
         });
 
         it('should return a 200 OK', function(done) {
-            function testHandler (result, callback) {
+            function testHandler(result, callback) {
                 callback(null, '');
             }
 
             subscriptionService.setNotificationHandler(testHandler);
 
-            request(notificationRequest, function(error, result, body){
+            request(notificationRequest, function(error, result, body) {
                 should.not.exist(error);
                 result.statusCode.should.equal(200);
                 done();
@@ -207,20 +207,20 @@ describe('OneM2M module: Subscriptions', function() {
 
         it('should execute the notification handler', function(done) {
             var notificationRequest = {
-                    uri: 'http://localhost:7654/notification',
+                    uri: 'http://localhost:7654/notifications',
                     method: 'POST',
                     body: utils.readExampleFile('./test/unit/oneM2MResponses/oneM2MNotification.xml', true)
                 },
                 capturedResult;
 
-            function testHandler (result, callback) {
+            function testHandler(result, callback) {
                 capturedResult = result;
                 callback(null, '');
             }
 
             subscriptionService.setNotificationHandler(testHandler);
 
-            request(notificationRequest, function(error, result, body){
+            request(notificationRequest, function(error, result, body) {
                 should.exist(capturedResult);
                 capturedResult.should.deepEqual(expectedResult);
                 done();

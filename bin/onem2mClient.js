@@ -194,8 +194,8 @@ function notificationHandler(result, callback) {
 }
 
 config.init(require('../config'), function() {
-    subscriptionService.setNotificationHandler(notificationHandler);
     subscriptionService.start(function() {
+        subscriptionService.setNotificationHandler(notificationHandler);
         clUtils.initialize(commands, 'OneM2M client> ');
     });
 });
