@@ -24,9 +24,11 @@
 
 var subscriptionService = require('../../lib/services/oneM2M/subscriptionService'),
     configService = require('../../lib/services/configService'),
+    logger = require('logops'),
     nock = require('nock'),
     should = require('should'),
     utils = require('../tools/utils'),
+    request = require('request'),
     config = require('./testConfig'),
     oneM2MMock;
 
@@ -48,6 +50,8 @@ describe('OneM2M module: Subscriptions', function() {
 
         beforeEach(function(done) {
             nock.cleanAll();
+
+            logger.setLevel('FATAL');
 
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
@@ -151,7 +155,55 @@ describe('OneM2M module: Subscriptions', function() {
         });
     });
     describe('When a notification arrives to the notification endpoint', function() {
-        it('should execute the handler with the information of the notification');
+        var notificationRequest = {
+                uri: 'http://localhost:7654/notification',
+                method: 'POST',
+                body: 'testBody'
+            };
+
+        beforeEach(function(done) {
+            subscriptionService.start(done);
+        });
+
+        afterEach(function(done) {
+            subscriptionService.stop(done);
+        });
+
+        it('should return a 200 OK', function(done) {
+            function testHandler (result, callback) {
+                callback(null, '');
+            }
+
+            subscriptionService.setNotificationHandler(testHandler);
+
+            request(notificationRequest, function(error, result, body){
+                should.not.exist(error);
+                result.statusCode.should.equal(200);
+                done();
+            });
+        });
+
+        it('should execute the notification handler', function(done) {
+            var notificationRequest = {
+                    uri: 'http://localhost:7654/notification',
+                    method: 'POST',
+                    body: 'testBody'
+                },
+                capturedResult;
+
+            function testHandler (result, callback) {
+                capturedResult = result;
+                callback(null, '');
+            }
+
+            subscriptionService.setNotificationHandler(testHandler);
+
+            request(notificationRequest, function(error, result, body){
+                should.exist(capturedResult);
+                capturedResult.should.equal(notificationRequest.body);
+                done();
+            });
+        });
     });
 });
 
