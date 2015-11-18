@@ -9,11 +9,18 @@ In order to implement the first version of the IoTA, some conventions were appli
 and OneM2M Ones. Those conventions can be split in two categories: general conventions and operation specific conventions.
 
 #### General conventions
-This is a list of the general conventions that were considered for this first verison of the OneM2M IOTA:
-- Each FIWARE service (or Tenant) will be mapped to a OneM2M AE (as a service represents a cloud application in the FIWARE
-ecosystem.
-- Each subservice will be represented in OneM2M as a subservice.
-- Each device will be represented as a Resource Entity.
+This is a list of the general conventions that were considered for this first version of the OneM2M IOTA:
+
+- Each FIWARE service (or Tenant), along with its subservice (or service path) will be mapped to a single OneM2M AE (as 
+  a service represents a cloud application in the FIWARE ecosystem).
+  
+- Each device will be represented as a Container.
+
+- Whenever an update context arrives to the IoT Agent with a command value, a new content instance will be created under
+  the device container.
+  
+- When a new device is provisioned, a subscription to the device container will be created. Notifications to the IOTA 
+  will be mapped to active attributes.
 
 #### Protocol specific conventions
 The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
@@ -78,6 +85,16 @@ OneM2M IOTA and may change in the future.
 | cr        	         | creator                | CREATE (Res) | Same as parent.                                       |
 | cs        	         | contentSize            | CREATE (Res) | Same as parent.                                       |
 
+##### Subscription-related operations
+| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
+| enc        	         | eventNotificationCriteria | CREATE (Req) | Holds the notification criteria (rss)             |
+| rss        	         | resourceStatus         | CREATE (Req) | Indicates the condition is child created (1).        |
+| nu        	         | notificationURI        | CREATE (Req) | Public URI of the IoT Agent.                          |
+| pn        	         | pendingNotification    | CREATE (Req) | Unclear. Currently, the fixed string 1.               |
+| nct        	         | notificationContentType | CREATE (Req) | Unclear. Currently, the fixed string 2.              |
+
+
 #### Operation headers
 
 Along with the XML content of the request, some information must be passed along in headers. The following table shows
@@ -91,6 +108,19 @@ the mapping for the header values:
 | X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
 | X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
 
+## Test Client
+The OneM2M IoT Agent provides a command line client for testing its integration with complete stacks. This client lets
+the user send requests to a OneM2M as well as receive notifications from the OneM2M system. 
+
+In order to use the client, execute the following command, from the root of the project:
+```
+./bin/onem2mClient.js
+```
+This will open a prompt where multiple commands can be issued. For an explanation and the syntax of all the supported
+commands execute:
+```
+help
+```
 
 ## Development documentation
 ### Project build

@@ -4,5 +4,7 @@
   "ContainerCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
   "GetContainerTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
   "ResourceCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
-  "GetResourceTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/contentInstance-{{ResName}}"
+  "SubscriptionCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
+  "GetResourceTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/contentInstance-{{ResName}}",
+  "GetSubscriptionTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/subscription-{{SubsName}}"
 }

@@ -1,1 +1,3 @@
 - Create OneM2M client module (#1).
+- Implement subscriptions in the OneM2M client module (#7).
+- Create a command line client to test the IOTA (#6).
