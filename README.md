@@ -108,6 +108,19 @@ the mapping for the header values:
 | X-M2M-RI             | App-ID                 | ALL (Res)    | Unique ID of a request. Generated with UUID.          |
 | X-M2M-RSC            | Response Status Code   | ALL (Res)    | Check for operation result or errors.                 |
 
+## Test Client
+The OneM2M IoT Agent provides a command line client for testing its integration with complete stacks. This client lets
+the user send requests to a OneM2M as well as receive notifications from the OneM2M system. 
+
+In order to use the client, execute the following command, from the root of the project:
+```
+./bin/onem2mClient.js
+```
+This will open a prompt where multiple commands can be issued. For an explanation and the syntax of all the supported
+commands execute:
+```
+help
+```
 
 ## Development documentation
 ### Project build
