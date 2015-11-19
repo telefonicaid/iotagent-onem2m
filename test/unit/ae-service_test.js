@@ -82,6 +82,75 @@ describe('OneM2M module: AEs', function() {
             });
         });
     });
+    describe('When a user retrieves an existing Application Entity', function() {
+        var expectedResult = {
+            rty: '2',
+            ri: 'AE00000000000000000048',
+            rn: 'SmartGondor',
+            pi: 'Mobius',
+            ct: '2015-11-16T15:05:23+01:00',
+            lt: '2015-11-16T15:05:23+01:00',
+            api: 'SmartGondor',
+            aei: 'S00000000000000000048',
+            rsc: '2000',
+            poa: ''
+        };
+
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('Accept', 'application/xml')
+                .get('/Mobius/AE-SmartGondor')
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
+
+            configService.init(config, done);
+        });
+
+        it('should return all the information from the container', function(done) {
+            aeMgmt.get('SmartGondor', function(error, result) {
+                should.not.exist(error);
+                should.exist(result);
+                result.should.deepEqual(expectedResult);
+                done();
+            });
+        });
+    });
+    describe('When a user retrieves an unexistent Application Entity', function() {
+        beforeEach(function(done) {
+            nock.cleanAll();
+
+            oneM2MMock = nock('http://mockedOneM2M.com:4567')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('Accept', 'application/xml')
+                .get('/Mobius/AE-SmartGondor')
+                .reply(
+                    404,
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '4004'
+                    });
+
+            configService.init(config, done);
+        });
+
+        it('should return all the information from the container', function(done) {
+            aeMgmt.get('SmartGondor', function(error, result) {
+                should.exist(error);
+                error.name.should.equal('NOT_FOUND');
+                done();
+            });
+        });
+    });
     describe('When a user removes an Application Entity', function() {
         beforeEach(function(done) {
             nock.cleanAll();

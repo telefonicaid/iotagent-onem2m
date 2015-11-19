@@ -1,0 +1,28 @@
+{
+  "devices": [
+    {
+      "device_id": "onem2mdevice",
+      "protocol": "ONEM2M_PROTOCOL",
+      "entity_name": "TheOneM2MDevice",
+      "entity_type": "OneM2MType",
+      "attributes": [
+        {
+          "name": "attr_name",
+          "type": "string"
+        }
+      ],
+      "lazy": [
+        {
+          "name": "luminance",
+          "type": "lumens"
+        }
+      ],
+      "commands": [
+        {
+          "name": "commandAttr",
+          "type": "commandType"
+        }
+      ]
+    }
+  ]
+}

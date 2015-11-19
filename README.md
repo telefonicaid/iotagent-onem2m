@@ -14,13 +14,13 @@ This is a list of the general conventions that were considered for this first ve
 - Each FIWARE service (or Tenant), along with its subservice (or service path) will be mapped to a single OneM2M AE (as 
   a service represents a cloud application in the FIWARE ecosystem).
   
-- Each device will be represented as a Container.
+- Each device will be represented as a Container, using the device ID as the container name.
 
 - Whenever an update context arrives to the IoT Agent with a command value, a new content instance will be created under
   the device container.
   
 - When a new device is provisioned, a subscription to the device container will be created. Notifications to the IOTA 
-  will be mapped to active attributes.
+  will be mapped to active attributes. The name of the subscription will be the device ID prefixed with the 'subs_' string.
 
 #### Protocol specific conventions
 The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
@@ -29,7 +29,7 @@ OneM2M IOTA and may change in the future.
 
 ##### AE-related operations
 
-| Short Name           | Standard name          |  Operation   | Mapping in FIWARE                                     |
+| Short Name           | Standard name          | Operation    | Mapping in FIWARE                                     |
 | -------------------- |:---------------------- |: ----------- |:----------------------------------------------------- |
 | api       	         | App-ID                 | CREATE (Req) | Value of header `fiware-service`.                     |
 | aei       	         | AE-ID                  | CREATE (Req) | Value of header `fiware-service`.                     |
