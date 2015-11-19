@@ -32,7 +32,7 @@ var iota = require('../../lib/iotagent-onem2m'),
     contextBrokerMock,
     oneM2MMock;
 
-describe.only('Device provisioning', function() {
+describe('Device provisioning', function() {
     var optionsProvision = {
         url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
         method: 'POST',
@@ -44,6 +44,24 @@ describe.only('Device provisioning', function() {
     };
 
     beforeEach(function(done) {
+        nock.cleanAll();
+
+        contextBrokerMock = nock('http://10.11.128.16:1026')
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/NGSI9/registerContext')
+            .reply(200,
+            utils.readExampleFile(
+                './test/unit/contextAvailabilityResponses/registerProvisionedDeviceSuccess.json'));
+
+        contextBrokerMock
+            .matchHeader('fiware-service', 'smartGondor')
+            .matchHeader('fiware-servicepath', '/gardens')
+            .post('/v1/updateContext')
+            .reply(200,
+            utils.readExampleFile(
+                './test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
+
         iota.start(config, done);
     });
     afterEach(function(done) {
@@ -53,25 +71,6 @@ describe.only('Device provisioning', function() {
     });
     describe('When a new device is provisioned for an unexistent AE', function() {
         beforeEach(function() {
-            nock.cleanAll();
-
-            contextBrokerMock = nock('http://10.11.128.16:1026')
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/NGSI9/registerContext')
-                .reply(200,
-                utils.readExampleFile(
-                    './test/unit/contextAvailabilityResponses/registerProvisionedDeviceSuccess.json'));
-
-            contextBrokerMock
-                .matchHeader('fiware-service', 'smartGondor')
-                .matchHeader('fiware-servicepath', '/gardens')
-                .post('/v1/updateContext')
-                .reply(200,
-                utils.readExampleFile(
-                    './test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
-
-
             oneM2MMock = nock('http://mockedonem2m.com:4567')
                 .get('/Mobius/AE-smartGondor_gardens')
                 .reply(
@@ -140,8 +139,55 @@ describe.only('Device provisioning', function() {
         });
     });
     describe('When a new device is provisioned for an existent AE', function() {
-        it('should not create the AE');
-        it('should create a container for the device');
-        it('should subscribe to the created container');
+        beforeEach(function() {
+            oneM2MMock = nock('http://mockedonem2m.com:4567')
+                .get('/Mobius/AE-smartGondor_gardens')
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
+
+            oneM2MMock
+                .post('/Mobius/AE-smartGondor_gardens')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'onem2mdevice')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                201,
+                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerCreationSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2001'
+                });
+
+            oneM2MMock
+                .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'subs_onem2mdevice')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/subscriptionCreationSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2001'
+                });
+        });
+
+        it('should not create the AE', function(done) {
+            request(optionsProvision, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(201);
+                contextBrokerMock.done();
+                done();
+            });
+        });
     });
 });
