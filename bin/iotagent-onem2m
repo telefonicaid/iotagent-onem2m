@@ -1,9 +1,51 @@
 #!/usr/bin/env node
 
-var cli = require('../lib/cli'),
-    tnb = require('../');
+/*
+ * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
+ *
+ * This file is part of iotagent-onem2m
+ *
+ * iotagent-onem2m is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * iotagent-onem2m is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with iotagent-onem2m.
+ * If not, seehttp://www.gnu.org/licenses/.
+ *
+ * For those usages not covered by the GNU Affero General Public License
+ * please contact with::[contacto@tid.es]
+ */
+'use strict';
 
-var cmd = cli.process();
+var iotAgent = require('../lib/iotagent-onem2m'),
+    context = {
+        op: 'OneM2M.Executable'
+    },
+    logger = require('logops');
 
-console.log([cmd, tnb.awesome()].join(' '));
+function start() {
+    var config;
 
+    if (process.argv.length === 3) {
+        config = require('../' + process.argv[2]);
+    } else {
+        config = require('../config');
+    }
+
+    iotAgent.start(config, function (error) {
+        if (error) {
+            logger.error(context, 'Error starting OneM2M Agent: [%s] Exiting process', error);
+        } else {
+            logger.info(context, 'OneM2M Agent IoT Agent started');
+        }
+    });
+}
+
+start();
