@@ -32,16 +32,16 @@ var iota = require('../../lib/iotagent-onem2m'),
     contextBrokerMock,
     oneM2MMock;
 
-describe('Device provisioning', function() {
+describe('Notification processing', function() {
     var optionsProvision = {
-            url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
-            method: 'POST',
-            json: utils.readExampleFile('./test/unit/deviceProvisioningRequests/provisionNewDevice.json'),
-            headers: {
-                'fiware-service': 'smartGondor',
-                'fiware-servicepath': '/gardens'
-            }
-        };
+        url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
+        method: 'POST',
+        json: utils.readExampleFile('./test/unit/deviceProvisioningRequests/provisionNewDevice.json'),
+        headers: {
+            'fiware-service': 'smartGondor',
+            'fiware-servicepath': '/gardens'
+        }
+    };
 
     beforeEach(function(done) {
         nock.cleanAll();
@@ -69,77 +69,22 @@ describe('Device provisioning', function() {
             iotAgentLib.clearAll(done);
         });
     });
-    describe('When a new device is provisioned for an unexistent AE', function() {
-        beforeEach(function() {
-            oneM2MMock = nock('http://mockedonem2m.com:4567')
-                .get('/Mobius/AE-smartGondor_gardens')
-                .reply(
-                    404,
-                    utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
-                    {
-                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
-                        'X-M2M-RSC': '2000'
-                    });
 
-            oneM2MMock
-                .post('/Mobius')
-                .matchHeader('X-M2M-NM', 'smartGondor_gardens')
-                .reply(
-                    201,
-                    utils.readExampleFile('./test/unit/oneM2MResponses/AECreationSuccess.xml', true),
-                    {
-                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
-                        'X-M2M-RSC': '2001'
-                    });
+    describe('When a new notification arrives to the IOTA containing a declared active attribute', function() {
+        var notificationRequest = {
+            uri: 'http://localhost:7654/notifications',
+            method: 'POST',
+            body: utils.readExampleFile('./test/unit/oneM2MResponses/oneM2MNotification.xml', true)
+        };
 
-            oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens')
-                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
-                .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'onem2mdevice')
-                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
-                .matchHeader('Accept', 'application/xml')
-                .reply(
-                201,
-                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerCreationSuccess.xml', true),
-                {
-                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
-                    'X-M2M-RSC': '2001'
-                });
+        beforeEach(function(done) {
+            contextBrokerMock
+                .post('/v1/updateContext')
+                    //utils.readExampleFile('./test/unit/contextRequests/updateNotificationValue.json'))
+                .matchHeader('fiware-service', 'smartGondor')
+                .matchHeader('fiware-servicepath', '/gardens')
+                .reply(200, utils.readExampleFile('./test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
 
-            oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice')
-                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
-                .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'subs_onem2mdevice')
-                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
-                .matchHeader('Accept', 'application/xml')
-                .reply(
-                    200,
-                    utils.readExampleFile('./test/unit/oneM2MResponses/subscriptionCreationSuccess.xml', true),
-                    {
-                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
-                        'X-M2M-RSC': '2001'
-                    });
-        });
-
-        it('should return without error', function(done) {
-            request(optionsProvision, function(error, response, body) {
-                should.not.exist(error);
-                response.statusCode.should.equal(201);
-                contextBrokerMock.done();
-                done();
-            });
-        });
-        it('should create the AE and the container and subscribe to its events', function(done) {
-            request(optionsProvision, function(error, response, body) {
-                oneM2MMock.done();
-                done();
-            });
-        });
-    });
-    describe('When a new device is provisioned for an existent AE', function() {
-        beforeEach(function() {
             oneM2MMock = nock('http://mockedonem2m.com:4567')
                 .get('/Mobius/AE-smartGondor_gardens')
                 .reply(
@@ -179,12 +124,20 @@ describe('Device provisioning', function() {
                     'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
                     'X-M2M-RSC': '2001'
                 });
+
+            request(optionsProvision, done);
         });
 
-        it('should not create the AE', function(done) {
-            request(optionsProvision, function(error, response, body) {
+        it('should accept the notification', function(done) {
+            request(notificationRequest, function(error, result, body) {
                 should.not.exist(error);
-                response.statusCode.should.equal(201);
+                result.statusCode.should.equal(200);
+                done();
+            });
+        });
+
+        it('should send an updateContext to the context Broker with the notification data', function(done) {
+            request(notificationRequest, function(error, result, body) {
                 contextBrokerMock.done();
                 done();
             });

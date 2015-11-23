@@ -22,7 +22,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "iotagent-node-lib": "*",
+    "iotagent-node-lib": "https://github.com/telefonicaid/iotagent-node-lib/tarball/develop",
     "request": "*",
     "async": "*",
     "logops": "*",
