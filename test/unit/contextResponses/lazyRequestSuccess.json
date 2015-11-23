@@ -1,0 +1,22 @@
+{
+  "contextResponses": [
+    {
+      "contextElement": {
+        "attributes": [
+          {
+            "name": "luminance",
+            "type": "text",
+            "value": ""
+          }
+        ],
+        "id": "TheOneM2MDevice",
+        "isPattern": false,
+        "type": "OneM2MType"
+      },
+      "statusCode": {
+        "code": 200,
+        "reasonPhrase": "OK"
+      }
+    }
+  ]
+}

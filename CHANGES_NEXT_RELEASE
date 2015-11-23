@@ -3,3 +3,4 @@
 - Create a command line client to test the IOTA (#6).
 - Create a OneM2M resource for each provisioned device (#3).
 - Process notifications as active attributes (#11).
+- Process lazy attributes as creation of new content instances (#12).
