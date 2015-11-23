@@ -7,7 +7,7 @@
       "entity_type": "OneM2MType",
       "attributes": [
         {
-          "name": "attr_name",
+          "name": "theAttributeName",
           "type": "string"
         }
       ],

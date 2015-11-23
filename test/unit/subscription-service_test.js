@@ -166,8 +166,8 @@ describe('OneM2M module: Subscriptions', function() {
         var expectedResult = {
             rty: '4',
             ri: 'CI00000000000000000047',
-            rn: 'contentInstance1',
-            pi: 'CT00000000000000000055',
+            rn: 'theAttributeName',
+            pi: 'CT00000000000000000043',
             ct: '2015-11-18T16:38:41+01:00',
             lt: '2015-11-18T16:38:41+01:00',
             st: '4',

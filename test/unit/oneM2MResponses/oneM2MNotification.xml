@@ -2,8 +2,8 @@
 <m2m:cin xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <rty>4</rty>
     <ri>CI00000000000000000047</ri>
-    <rn>contentInstance1</rn>
-    <pi>CT00000000000000000055</pi>
+    <rn>theAttributeName</rn>
+    <pi>CT00000000000000000043</pi>
     <ct>2015-11-18T16:38:41+01:00</ct>
     <lt>2015-11-18T16:38:41+01:00</lt>
     <lbl></lbl>
