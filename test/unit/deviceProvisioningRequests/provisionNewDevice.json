@@ -14,7 +14,7 @@
       "lazy": [
         {
           "name": "luminance",
-          "type": "lumens"
+          "type": "text"
         }
       ],
       "commands": [

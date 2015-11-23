@@ -1,0 +1,17 @@
+{
+  "contextElements": [
+    {
+      "type": "OneM2MType",
+      "isPattern": "false",
+      "id": "TheOneM2MDevice",
+      "attributes": [
+        {
+          "name": "luminance",
+          "type": "text",
+          "value": "101"
+        }
+      ]
+    }
+  ],
+  "updateAction": "UPDATE"
+}
