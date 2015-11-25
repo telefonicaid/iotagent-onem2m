@@ -50,7 +50,7 @@ config.iota = {
     types: {},
     service: 'howtoService',
     subservice: '/howto',
-    providerUrl: 'http://localhost:4041',
+    providerUrl: 'http://localhost:4048',
     deviceRegistrationDuration: 'P1M',
     defaultType: 'Thing'
 };
