@@ -42,7 +42,7 @@ config.iota = {
         port: '1026'
     },
     server: {
-        port: 4041
+        port: 4048
     },
     deviceRegistry: {
         type: 'memory'
