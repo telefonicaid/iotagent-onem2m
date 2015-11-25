@@ -133,7 +133,7 @@ describe('Lazy attribute processing', function() {
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'luminance')
+                .matchHeader('X-M2M-NM', /luminance.*/)
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
                 .matchHeader('Accept', 'application/xml')
                 .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice',
