@@ -1,0 +1,17 @@
+{
+  "devices": [
+    {
+      "device_id": "weatherStation1",
+      "protocol": "ONEM2M",
+      "entity_name": "sensors:weatherStation1",
+      "entity_type": "WeatherStation",
+      "timezone": "America/Santiago",
+      "lazy": [
+        {
+          "name": "temperature",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
