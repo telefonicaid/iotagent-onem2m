@@ -32,7 +32,7 @@ var iota = require('../../lib/iotagent-onem2m'),
     contextBrokerMock,
     oneM2MMock;
 
-describe('Notification processing', function() {
+describe.skip('Notification processing', function() {
     var optionsProvision = {
         url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
         method: 'POST',
