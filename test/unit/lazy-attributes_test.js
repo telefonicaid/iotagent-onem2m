@@ -32,7 +32,7 @@ var iota = require('../../lib/iotagent-onem2m'),
     contextBrokerMock,
     oneM2MMock;
 
-describe.skip('Lazy attribute processing', function() {
+describe('Lazy attribute processing', function() {
     var optionsProvision = {
             url: 'http://localhost:' + config.iota.server.port + '/iot/devices',
             method: 'POST',
@@ -134,7 +134,6 @@ describe.skip('Lazy attribute processing', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', /luminance.*/)
-
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
                 .matchHeader('Accept', 'application/xml')
                 .post('/Mobius/AE-onem2mdevice/container-luminance',
