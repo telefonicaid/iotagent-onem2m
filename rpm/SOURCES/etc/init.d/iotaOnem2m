@@ -39,7 +39,7 @@
 
 PARAM=$1
 NAME=iotaonem2m
-EXECUTABLE=bin/iotagent-onem2m.js
+EXECUTABLE=bin/iotagent-onem2m
 IOTA_PATH=/opt/iotaonem2m
 PIDFILE=$IOTA_PATH/$NAME.pid
 LOG_PATH=/var/log/iotaonem2m/iotaonem2m.log
