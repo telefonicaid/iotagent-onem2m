@@ -91,7 +91,7 @@ instead.
 
 ## <a name="provisioning"/> Device Provisioning
 In order to use a Device with our recently deployed IoT Agent, we have to register it first. To do so, send a POST
-request to the URL ` ` with the following headers:
+request to the URL `/iot/devices` with the following headers:
 - `fiware-service` : name of the service where the device will be provisioned
 - `fiware-servicepath` : with the name of the FIWARE Subservice where the device data will be stored. 
 - `content-type`: `application/json`.
