@@ -171,7 +171,7 @@ describe('OneM2M module: Subscriptions', function() {
             ct: '2015-11-18T16:38:41+01:00',
             lt: '2015-11-18T16:38:41+01:00',
             st: '4',
-            cr: 'AE00000000000000000060',
+            cr: 'AE00000000000000000048',
             cnf: 'text',
             cs: '3',
             con: '101'

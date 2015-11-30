@@ -79,7 +79,7 @@ describe('Lazy attribute processing', function() {
             .reply(200, utils.readExampleFile('./test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
 
         oneM2MMock = nock('http://mockedonem2m.com:4567')
-            .get('/Mobius/AE-smartGondor_gardens')
+            .get('/Mobius/AE-onem2mdevice')
             .reply(
             200,
             utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -89,10 +89,10 @@ describe('Lazy attribute processing', function() {
             });
 
         oneM2MMock
-            .post('/Mobius/AE-smartGondor_gardens')
+            .post('/Mobius/AE-onem2mdevice')
             .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
             .matchHeader('X-M2M-Origin', 'Origin')
-            .matchHeader('X-M2M-NM', 'onem2mdevice')
+            .matchHeader('X-M2M-NM', 'luminance')
             .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
             .matchHeader('Accept', 'application/xml')
             .reply(
@@ -104,10 +104,10 @@ describe('Lazy attribute processing', function() {
             });
 
         oneM2MMock
-            .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice')
+            .post('/Mobius/AE-onem2mdevice/container-luminance')
             .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
             .matchHeader('X-M2M-Origin', 'Origin')
-            .matchHeader('X-M2M-NM', 'subs_onem2mdevice')
+            .matchHeader('X-M2M-NM', 'subs_luminance')
             .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
             .matchHeader('Accept', 'application/xml')
             .reply(
@@ -136,7 +136,7 @@ describe('Lazy attribute processing', function() {
                 .matchHeader('X-M2M-NM', /luminance.*/)
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
                 .matchHeader('Accept', 'application/xml')
-                .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice',
+                .post('/Mobius/AE-onem2mdevice/container-luminance',
                     utils.readExampleFile('./test/unit/oneM2MRequests/resourceCreation.xml', true))
                 .reply(
                 200,

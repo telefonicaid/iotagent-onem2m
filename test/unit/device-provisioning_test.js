@@ -72,7 +72,7 @@ describe('Device provisioning', function() {
     describe('When a new device is provisioned for an unexistent AE', function() {
         beforeEach(function() {
             oneM2MMock = nock('http://mockedonem2m.com:4567')
-                .get('/Mobius/AE-smartGondor_gardens')
+                .get('/Mobius/AE-onem2mdevice')
                 .reply(
                     404,
                     utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -83,7 +83,8 @@ describe('Device provisioning', function() {
 
             oneM2MMock
                 .post('/Mobius')
-                .matchHeader('X-M2M-NM', 'smartGondor_gardens')
+                .matchHeader('X-M2M-NM', 'onem2mdevice')
+                .matchHeader('X-M2M-Origin', 'Origin')
                 .reply(
                     201,
                     utils.readExampleFile('./test/unit/oneM2MResponses/AECreationSuccess.xml', true),
@@ -93,10 +94,10 @@ describe('Device provisioning', function() {
                     });
 
             oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens')
+                .post('/Mobius/AE-onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'onem2mdevice')
+                .matchHeader('X-M2M-NM', 'theAttributeName')
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
                 .matchHeader('Accept', 'application/xml')
                 .reply(
@@ -108,10 +109,25 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice')
+                .post('/Mobius/AE-onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'subs_onem2mdevice')
+                .matchHeader('X-M2M-NM', 'luminance')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                201,
+                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerCreationSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2001'
+                });
+
+            oneM2MMock
+                .post('/Mobius/AE-onem2mdevice/container-theAttributeName')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'subs_theAttributeName')
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
                 .matchHeader('Accept', 'application/xml')
                 .reply(
@@ -141,7 +157,7 @@ describe('Device provisioning', function() {
     describe('When a new device is provisioned for an existent AE', function() {
         beforeEach(function() {
             oneM2MMock = nock('http://mockedonem2m.com:4567')
-                .get('/Mobius/AE-smartGondor_gardens')
+                .get('/Mobius/AE-onem2mdevice')
                 .reply(
                 200,
                 utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -151,10 +167,10 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens')
+                .post('/Mobius/AE-onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'onem2mdevice')
+                .matchHeader('X-M2M-NM', 'theAttributeName')
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
                 .matchHeader('Accept', 'application/xml')
                 .reply(
@@ -166,10 +182,25 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-smartGondor_gardens/container-onem2mdevice')
+                .post('/Mobius/AE-onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
-                .matchHeader('X-M2M-NM', 'subs_onem2mdevice')
+                .matchHeader('X-M2M-NM', 'luminance')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                201,
+                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerCreationSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2001'
+                });
+
+            oneM2MMock
+                .post('/Mobius/AE-onem2mdevice/container-theAttributeName')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'subs_theAttributeName')
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
                 .matchHeader('Accept', 'application/xml')
                 .reply(

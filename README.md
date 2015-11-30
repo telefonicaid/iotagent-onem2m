@@ -11,16 +11,16 @@ and OneM2M Ones. Those conventions can be split in two categories: general conve
 #### General conventions
 This is a list of the general conventions that were considered for this first version of the OneM2M IOTA:
 
-- Each FIWARE service (or Tenant), along with its subservice (or service path) will be mapped to a single OneM2M AE (as 
-  a service represents a cloud application in the FIWARE ecosystem).
+- Each Device will be mapped to a single OneM2M AE. The Device ID will be the AE name.
   
-- Each device will be represented as a Container, using the device ID as the container name.
+- Each attribute in the device will be represented as a Container, using the attribute name as the container name.
 
-- Whenever an update context arrives to the IoT Agent with a command value, a new content instance will be created under
-  the device container.
+- Whenever an update context arrives to the IoT Agent with a lazy attribute value, a new content instance will be created
+  under the corresponding device container.
   
-- When a new device is provisioned, a subscription to the device container will be created. Notifications to the IOTA 
-  will be mapped to active attributes. The name of the subscription will be the device ID prefixed with the 'subs_' string.
+- When a new device is provisioned, a subscription to the device container will be created for each active attribute in
+  the device. Notifications to the IOTA will be mapped to active attributes. The name of the subscription will be the 
+  attribute name prefixed with the 'subs_' string.
 
 #### Protocol specific conventions
 The following tables show all the attributes in request and response contents in the OneM2M protocol, and how they are 
