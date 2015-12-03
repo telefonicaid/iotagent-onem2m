@@ -63,7 +63,7 @@ describe('OneM2M module: Subscriptions', function() {
                 .matchHeader('X-M2M-NM', 'subscription_1')
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
                 .matchHeader('Accept', 'application/xml')
-                .post('/Mobius/AE-SmartGondor/container-gardens',
+                .post('/Mobius/SmartGondor/gardens',
                     utils.readExampleFile('./test/unit/oneM2MRequests/subscriptionCreation.xml', true))
                 .reply(
                     200,
@@ -114,7 +114,7 @@ describe('OneM2M module: Subscriptions', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('Accept', 'application/xml')
-                .get('/Mobius/AE-SmartGondor/container-gardens/subscription-subscription_1')
+                .get('/Mobius/SmartGondor/gardens/subscription-subscription_1')
                 .reply(
                 200,
                 utils.readExampleFile('./test/unit/oneM2MResponses/subscriptionGetSuccess.xml', true),
@@ -142,7 +142,7 @@ describe('OneM2M module: Subscriptions', function() {
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('Accept', 'application/xml')
-                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/AE-SmartGondor/container-gardens' +
+                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/SmartGondor/gardens' +
                     '/subscription-subscription_1')
                 .reply(
                 200,

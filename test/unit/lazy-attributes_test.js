@@ -79,7 +79,7 @@ describe('Lazy attribute processing', function() {
             .reply(200, utils.readExampleFile('./test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
 
         oneM2MMock = nock('http://mockedonem2m.com:4567')
-            .get('/Mobius/AE-onem2mdevice')
+            .get('/Mobius/onem2mdevice')
             .reply(
             200,
             utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -89,7 +89,7 @@ describe('Lazy attribute processing', function() {
             });
 
         oneM2MMock
-            .post('/Mobius/AE-onem2mdevice')
+            .post('/Mobius/onem2mdevice')
             .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
             .matchHeader('X-M2M-Origin', 'Origin')
             .matchHeader('X-M2M-NM', 'luminance')
@@ -104,7 +104,7 @@ describe('Lazy attribute processing', function() {
             });
 
         oneM2MMock
-            .post('/Mobius/AE-onem2mdevice/container-luminance')
+            .post('/Mobius/onem2mdevice/luminance')
             .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
             .matchHeader('X-M2M-Origin', 'Origin')
             .matchHeader('X-M2M-NM', 'subs_luminance')
@@ -136,7 +136,7 @@ describe('Lazy attribute processing', function() {
                 .matchHeader('X-M2M-NM', /luminance.*/)
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
                 .matchHeader('Accept', 'application/xml')
-                .post('/Mobius/AE-onem2mdevice/container-luminance',
+                .post('/Mobius/onem2mdevice/luminance',
                     utils.readExampleFile('./test/unit/oneM2MRequests/resourceCreation.xml', true))
                 .reply(
                 200,

@@ -103,7 +103,7 @@ describe('OneM2M module: AEs', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('Accept', 'application/xml')
-                .get('/Mobius/AE-SmartGondor')
+                .get('/Mobius/SmartGondor')
                 .reply(
                 200,
                 utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -132,7 +132,7 @@ describe('OneM2M module: AEs', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('Accept', 'application/xml')
-                .get('/Mobius/AE-SmartGondor')
+                .get('/Mobius/SmartGondor')
                 .reply(
                     404,
                     {
@@ -157,7 +157,7 @@ describe('OneM2M module: AEs', function() {
 
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
-                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/AE-SmartGondor')
+                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/SmartGondor')
                 .matchHeader('Accept', 'application/xml')
                 .reply(
                 200,
