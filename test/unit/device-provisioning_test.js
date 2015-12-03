@@ -72,7 +72,7 @@ describe('Device provisioning', function() {
     describe('When a new device is provisioned for an unexistent AE', function() {
         beforeEach(function() {
             oneM2MMock = nock('http://mockedonem2m.com:4567')
-                .get('/Mobius/AE-onem2mdevice')
+                .get('/Mobius/onem2mdevice')
                 .reply(
                     404,
                     utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -94,7 +94,7 @@ describe('Device provisioning', function() {
                     });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice')
+                .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'theAttributeName')
@@ -109,7 +109,7 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice')
+                .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'luminance')
@@ -124,7 +124,7 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice/container-theAttributeName')
+                .post('/Mobius/onem2mdevice/container-theAttributeName')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'subs_theAttributeName')
@@ -157,7 +157,7 @@ describe('Device provisioning', function() {
     describe('When a new device is provisioned for an existent AE', function() {
         beforeEach(function() {
             oneM2MMock = nock('http://mockedonem2m.com:4567')
-                .get('/Mobius/AE-onem2mdevice')
+                .get('/Mobius/onem2mdevice')
                 .reply(
                 200,
                 utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
@@ -167,7 +167,7 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice')
+                .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'theAttributeName')
@@ -182,7 +182,7 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice')
+                .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'luminance')
@@ -197,7 +197,7 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/AE-onem2mdevice/container-theAttributeName')
+                .post('/Mobius/onem2mdevice/container-theAttributeName')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'subs_theAttributeName')

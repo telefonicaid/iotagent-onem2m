@@ -1,11 +1,11 @@
 {
   "AECreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}",
-  "AERemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
-  "AEGetTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
-  "ContainerCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}",
-  "GetContainerTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
-  "ResourceCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
-  "SubscriptionCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}",
-  "GetResourceTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/contentInstance-{{ResName}}",
-  "GetSubscriptionTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/AE-{{AEName}}/container-{{ContName}}/subscription-{{SubsName}}"
+  "AERemovalTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}",
+  "AEGetTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}",
+  "ContainerCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}",
+  "GetContainerTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}/container-{{ContName}}",
+  "ResourceCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}/container-{{ContName}}",
+  "SubscriptionCreationTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}/container-{{ContName}}",
+  "GetResourceTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}/container-{{ContName}}/contentInstance-{{ResName}}",
+  "GetSubscriptionTemplate": "http://{{Host}}:{{Port}}{{CSEBase}}/{{AEName}}/container-{{ContName}}/subscription-{{SubsName}}"
 }
