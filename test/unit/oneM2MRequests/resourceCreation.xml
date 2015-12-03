@@ -2,6 +2,6 @@
 <m2m:cin
         xmlns:m2m="http://www.onem2m.org/xml/protocols"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <cnf>text</cnf>
+    <cnf>luminance</cnf>
     <con>101</con>
 </m2m:cin>
