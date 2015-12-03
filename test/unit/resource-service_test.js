@@ -70,19 +70,21 @@ describe('OneM2M module: Content instances', function() {
         });
 
         it('should send a create content instance with type resource to the OneM2M endpoint', function(done) {
-            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', function(error, result) {
-                should.not.exist(error);
-                oneM2MMock.done();
-                done();
-            });
+            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', 'luminance',
+                function(error, result) {
+                    should.not.exist(error);
+                    oneM2MMock.done();
+                    done();
+                });
         });
 
         it('should return all the response fields', function(done) {
-            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', function(error, result) {
-                should.exist(result);
-                result.should.deepEqual(expectedResult);
-                done();
-            });
+            resourceService.createText('SmartGondor', 'gardens', 'testDevice', '101', 'luminance',
+                function(error, result) {
+                    should.exist(result);
+                    result.should.deepEqual(expectedResult);
+                    done();
+                });
         });
     });
     describe('When a user gets a resource', function() {
