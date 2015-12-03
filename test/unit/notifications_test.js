@@ -126,7 +126,7 @@ describe('Notification processing', function() {
                 });
 
             oneM2MMock
-                .post('/Mobius/onem2mdevice/container-theAttributeName')
+                .post('/Mobius/onem2mdevice/theAttributeName')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('X-M2M-NM', 'subs_theAttributeName')

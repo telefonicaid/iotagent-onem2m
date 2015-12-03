@@ -104,7 +104,7 @@ describe('Lazy attribute processing', function() {
             });
 
         oneM2MMock
-            .post('/Mobius/onem2mdevice/container-luminance')
+            .post('/Mobius/onem2mdevice/luminance')
             .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
             .matchHeader('X-M2M-Origin', 'Origin')
             .matchHeader('X-M2M-NM', 'subs_luminance')
@@ -136,7 +136,7 @@ describe('Lazy attribute processing', function() {
                 .matchHeader('X-M2M-NM', /luminance.*/)
                 .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=4')
                 .matchHeader('Accept', 'application/xml')
-                .post('/Mobius/onem2mdevice/container-luminance',
+                .post('/Mobius/onem2mdevice/luminance',
                     utils.readExampleFile('./test/unit/oneM2MRequests/resourceCreation.xml', true))
                 .reply(
                 200,

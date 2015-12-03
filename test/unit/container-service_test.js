@@ -109,7 +109,7 @@ describe('OneM2M Module: Containers', function() {
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
                 .matchHeader('Accept', 'application/xml')
-                .get('/Mobius/SmartGondor/container-gardens')
+                .get('/Mobius/SmartGondor/gardens')
                 .reply(
                 200,
                 utils.readExampleFile('./test/unit/oneM2MResponses/ContainerGetSuccess.xml', true),
@@ -136,7 +136,7 @@ describe('OneM2M Module: Containers', function() {
 
             oneM2MMock = nock('http://mockedOneM2M.com:4567')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
-                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/SmartGondor/container-gardens')
+                .matchHeader('X-M2M-Origin', 'Origin')['delete']('/Mobius/SmartGondor/gardens')
                 .matchHeader('Accept', 'application/xml')
                 .reply(
                 200,
