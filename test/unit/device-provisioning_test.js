@@ -94,6 +94,16 @@ describe('Device provisioning', function() {
                     });
 
             oneM2MMock
+                .get('/Mobius/onem2mdevice/theAttributeName')
+                .reply(
+                    404,
+                    utils.readExampleFile('./test/unit/oneM2MResponses/ContainerGetSuccess.xml', true),
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '2000'
+                    });
+
+            oneM2MMock
                 .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
@@ -182,6 +192,16 @@ describe('Device provisioning', function() {
                 });
 
             oneM2MMock
+                .get('/Mobius/onem2mdevice/luminance')
+                .reply(
+                404,
+                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
+
+            oneM2MMock
                 .post('/Mobius/onem2mdevice')
                 .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
                 .matchHeader('X-M2M-Origin', 'Origin')
@@ -210,6 +230,69 @@ describe('Device provisioning', function() {
                     'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
                     'X-M2M-RSC': '2001'
                 });
+        });
+
+        it('should not create the AE', function(done) {
+            request(optionsProvision, function(error, response, body) {
+                should.not.exist(error);
+                response.statusCode.should.equal(201);
+                contextBrokerMock.done();
+                done();
+            });
+        });
+    });
+
+    describe('When a new device is provisioned for an existent AE and container', function() {
+        beforeEach(function() {
+            oneM2MMock = nock('http://mockedonem2m.com:4567')
+                .get('/Mobius/onem2mdevice')
+                .reply(
+                200,
+                utils.readExampleFile('./test/unit/oneM2MResponses/AEGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
+
+            oneM2MMock
+                .post('/Mobius/onem2mdevice')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'theAttributeName')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=3')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                    201,
+                    utils.readExampleFile('./test/unit/oneM2MResponses/ContainerCreationSuccess.xml', true),
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '2001'
+                    });
+
+            oneM2MMock
+                .get('/Mobius/onem2mdevice/luminance')
+                .reply(
+                    200,
+                    utils.readExampleFile('./test/unit/oneM2MResponses/ContainerGetSuccess.xml', true),
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '2000'
+                    });
+
+            oneM2MMock
+                .post('/Mobius/onem2mdevice/theAttributeName')
+                .matchHeader('X-M2M-RI', /^[a-f0-9\-]*$/)
+                .matchHeader('X-M2M-Origin', 'Origin')
+                .matchHeader('X-M2M-NM', 'subs_theAttributeName')
+                .matchHeader('Content-Type', 'application/vnd.onem2m-res+xml;ty=23')
+                .matchHeader('Accept', 'application/xml')
+                .reply(
+                    200,
+                    utils.readExampleFile('./test/unit/oneM2MResponses/subscriptionCreationSuccess.xml', true),
+                    {
+                        'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                        'X-M2M-RSC': '2001'
+                    });
         });
 
         it('should not create the AE', function(done) {

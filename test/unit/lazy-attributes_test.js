@@ -72,8 +72,8 @@ describe('Lazy attribute processing', function() {
                 './test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
 
         contextBrokerMock
-            .post('/v1/updateContext')
-            //utils.readExampleFile('./test/unit/contextRequests/updateNotificationValue.json'))
+            .post('/v1/updateContext',
+                utils.readExampleFile('./test/unit/contextRequests/updateNotificationValue.json'))
             .matchHeader('fiware-service', 'smartGondor')
             .matchHeader('fiware-servicepath', '/gardens')
             .reply(200, utils.readExampleFile('./test/unit/contextResponses/createProvisionedDeviceSuccess.json'));
@@ -87,6 +87,16 @@ describe('Lazy attribute processing', function() {
                 'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
                 'X-M2M-RSC': '2000'
             });
+
+        oneM2MMock
+            .get('/Mobius/onem2mdevice/luminance')
+            .reply(
+                404,
+                utils.readExampleFile('./test/unit/oneM2MResponses/ContainerGetSuccess.xml', true),
+                {
+                    'X-M2M-RI': '123450e17f923-a5b0-436a-b7f2-4a17d0c1410b',
+                    'X-M2M-RSC': '2000'
+                });
 
         oneM2MMock
             .post('/Mobius/onem2mdevice')

@@ -6,3 +6,4 @@
 - Create the RPM and services for the IoT Agent (#9).
 - Process lazy attributes as creation of new content instances (#12).
 - Change OneM2M Mapping (#18).
+- Add container creation check on device provisioning.
