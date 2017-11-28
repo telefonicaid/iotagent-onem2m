@@ -27,7 +27,7 @@
     "async": "*",
     "logops": "*",
     "node-uuid": "*",
-    "mustache": "0.8.2",
+    "mustache": "2.2.1",
     "underscore": "*",
     "node-uuid": "*",
     "sax": "*",
