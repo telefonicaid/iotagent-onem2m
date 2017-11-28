@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<m2m:cin xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rty>4</rty>
+    <ri>CI00000000000000000042</ri>
+    <rn>testDevice</rn>
+    <pi>CT00000000000000000048</pi>
+    <ct>2015-11-17T12:03:16+01:00</ct>
+    <lt>2015-11-17T12:03:16+01:00</lt>
+    <lbl></lbl>
+    <at></at>
+    <aa></aa>
+    <st>1</st>
+    <cr>AE00000000000000000052</cr>
+    <cnf>text</cnf>
+    <cs>3</cs>
+    <con>101</con>
+</m2m:cin>

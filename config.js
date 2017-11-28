@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Copyright 2015 Telefonica Investigación y Desarrollo, S.A.U
  *
@@ -24,28 +22,37 @@
  */
 'use strict';
 
-var iotAgent = require('../lib/iotagent-onem2m'),
-    context = {
-        op: 'OneM2M.Executable'
-    },
-    logger = require('logops');
+var config = {};
 
-function start() {
-    var config;
-
-    if (process.argv.length === 3) {
-        config = require('../' + process.argv[2]);
-    } else {
-        config = require('../config');
+config.oneM2M = {
+    host: 'mockedOneM2M.com',
+    port: 4567,
+    cseBase: '/Mobius',
+    notifications: {
+        publicHost: 'localhost',
+        port: '7654',
+        path: '/notifications'
     }
+};
 
-    iotAgent.start(config, function (error) {
-        if (error) {
-            logger.error(context, 'Error starting OneM2M Agent: [%s] Exiting process', error);
-        } else {
-            logger.info(context, 'OneM2M Agent IoT Agent started');
-        }
-    });
-}
+config.iota = {
+    logLevel: 'FATAL',
+    contextBroker: {
+        host: '10.11.128.16',
+        port: '1026'
+    },
+    server: {
+        port: 4048
+    },
+    deviceRegistry: {
+        type: 'memory'
+    },
+    types: {},
+    service: 'howtoService',
+    subservice: '/howto',
+    providerUrl: 'http://localhost:4048',
+    deviceRegistrationDuration: 'P1M',
+    defaultType: 'Thing'
+};
 
-start();
+module.exports = config;

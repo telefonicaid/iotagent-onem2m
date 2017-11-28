@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<m2m:cnt
+        xmlns:m2m="http://www.onem2m.org/xml/protocols"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <containerType>heartbeat</containerType>
+    <heartbeatPeriod>300</heartbeatPeriod>
+</m2m:cnt>

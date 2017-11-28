@@ -1,0 +1,9 @@
+- Create OneM2M client module (#1).
+- Implement subscriptions in the OneM2M client module (#7).
+- Create a command line client to test the IOTA (#6).
+- Create a OneM2M resource for each provisioned device (#3).
+- Process notifications as active attributes (#11).
+- Create the RPM and services for the IoT Agent (#9).
+- Process lazy attributes as creation of new content instances (#12).
+- Change OneM2M Mapping (#18).
+- Add container creation check on device provisioning.

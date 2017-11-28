@@ -1,8 +1,73 @@
 # iotagent-onem2m
 
-IoT Agent for the OneM2M protocol
+## Index
 
-## Development documentation
+* [Overview](#overview)
+* [Setup](#setup)
+* [Test client](#testclient)
+* [Development](#development)
+
+## <a name="overview"/> Overview
+
+### OneM2M Conventions
+In order to implement the first version of the IoTA, some conventions were applied for the bridge between NGSI entities
+and OneM2M Ones. Those conventions can be split in two categories: general conventions and operation specific conventions.
+
+#### General conventions
+This is a list of the general conventions that were considered for this first version of the OneM2M IOTA:
+
+- Each Device will be mapped to a single OneM2M AE. The Device ID will be the AE name.
+  
+- Each attribute in the device will be represented as a Container, using the attribute name as the container name.
+
+- Whenever an update context arrives to the IoT Agent with a lazy attribute value, a new content instance will be created
+  under the corresponding device container.
+  
+- When a new device is provisioned, a subscription to the device container will be created for each active attribute in
+  the device. Notifications to the IOTA will be mapped to active attributes. The name of the subscription will be the 
+  attribute name prefixed with the 'subs_' string.
+
+## <a name="setup"/> Setup
+### Using RPM
+The project contains a script for generating an RPM that can be installed in Red Hat 6.5 compatible Linux distributions. The
+RPM depends on Node.js 0.10 version, so EPEL repositories are advisable. 
+
+In order to create the RPM, execute the following scritp, inside the `/rpm` folder:
+```
+create-rpm.sh -v <versionNumber> -r <releaseNumber>
+```
+
+Once the RPM is generated, it can be installed using the followogin command:
+```
+yum localinstall --nogpg <nameOfTheRPM>.rpm
+```
+
+### Using GIT
+In order to install the OneM2M IoT Agent, just clone the project and install the dependencies:
+```
+git clone https://github.com/telefonicaid/iotagent-onem2m.git
+npm install
+```
+In order to start the IoT Agent, from the root folder of the project, type:
+```
+bin/iotagent-onem2m
+```
+
+## <a name="testclient"/> Test Client
+The OneM2M IoT Agent provides a command line client for testing its integration with complete stacks. This client lets
+the user send requests to a OneM2M as well as receive notifications from the OneM2M system. 
+
+In order to use the client, execute the following command, from the root of the project:
+```
+./bin/onem2mClient.js
+```
+This will open a prompt where multiple commands can be issued. For an explanation and the syntax of all the supported
+commands execute:
+```
+help
+```
+
+## <a name="development"/> Development documentation
 ### Project build
 The project is managed using Grunt Task Runner.
 
@@ -15,7 +80,7 @@ The following sections show the available options in detail.
 
 
 ### Testing
-[Mocha](http://visionmedia.github.io/mocha/) Test Runner + [Chai](http://chaijs.com/) Assertion Library + [Sinon](http://sinonjs.org/) Spies, stubs.
+[Mocha](http://mochajs.org/) Test Runner + [Chai](http://chaijs.com/) Assertion Library + [Sinon](http://sinonjs.org/) Spies, stubs.
 
 The test environment is preconfigured to run [BDD](http://chaijs.com/api/bdd/) testing style with
 `chai.expect` and `chai.should()` available globally while executing tests, as well as the [Sinon-Chai](http://chaijs.com/plugins/sinon-chai) plugin.
